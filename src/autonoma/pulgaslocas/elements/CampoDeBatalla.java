@@ -7,18 +7,43 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.awt.event.KeyEvent;
 
+/**
+ * Clase que representa el campo de batalla donde interactúan pulgas normales, pulgas mutantes y un soldado.
+ * Maneja eventos de teclado, colisiones, generación de pulgas y almacenamiento de puntajes.
+ *
+ *@author Juan José Morales
+ * @version 20250506
+ * @since 1.0
+ */
 public class CampoDeBatalla {
 
-     private File archivoPuntajes;
+    // Archivo donde se guardan los puntajes
+    private File archivoPuntajes;
+    
+    // Objetos para lectura y escritura de archivos
     private final Lector lector;
     private final Escritor escritor;
+
+    // Listas de pulgas normales y mutantes activas en el campo
     private ArrayList<PulgaNormal> pulgasNormales;
     private ArrayList<PulgaMutante> pulgasMutantes;
+
+    // Soldado que se mueve por el campo
     private Soldado soldado;
+
+    // Dimensiones máximas del campo
     private int maxX;
     private int maxY;
+
+    // Puntaje actual del jugador
     private int puntaje;
 
+    /**
+     * Constructor que inicializa el campo de batalla y prepara el archivo de puntajes.
+     *
+     * @param rutaArchivo Ruta del archivo donde se almacenan los puntajes.
+     * @throws IOException Si ocurre un error al crear o acceder al archivo.
+     */
     public CampoDeBatalla(String rutaArchivo) throws IOException {
         this.archivoPuntajes = new File(rutaArchivo);
         if (!this.archivoPuntajes.exists()) {
@@ -33,18 +58,18 @@ public class CampoDeBatalla {
         this.puntaje = 0;
     }
 
-    public int getMaxX() {
-        return maxX;
-    }
+    // Métodos getters
+    public int getMaxX() { return maxX; }
 
-    public int getMaxY() {
-        return maxY;
-    }
+    public int getMaxY() { return maxY; }
 
-    public int getPuntaje() {
-        return puntaje;
-    }
+    public int getPuntaje() { return puntaje; }
 
+    /**
+     * Establece el soldado dentro del campo y ajusta sus límites.
+     *
+     * @param soldado Objeto Soldado.
+     */
     public void setSoldado(Soldado soldado) {
         this.soldado = soldado;
         if (soldado != null) {
@@ -53,8 +78,8 @@ public class CampoDeBatalla {
     }
 
     /**
-     * Establece los límites del campo de batalla
-     *
+     * Establece los límites del campo de batalla.
+     * 
      * @param maxX Ancho máximo
      * @param maxY Alto máximo
      * @since 2.0
@@ -74,7 +99,7 @@ public class CampoDeBatalla {
     }
 
     /**
-     * Agrega una nueva pulga normal al campo con la tecla M
+     * Agrega una pulga normal al presionar la tecla 'M'.
      *
      * @param e Evento de teclado
      * @since 2.0
@@ -85,6 +110,7 @@ public class CampoDeBatalla {
             int height = 20;
             int x, y;
 
+            // Posicionamiento aleatorio sin colisiones
             do {
                 x = (int) (Math.random() * (maxX - width));
                 y = (int) (Math.random() * (maxY - height));
@@ -96,6 +122,9 @@ public class CampoDeBatalla {
         }
     }
 
+    /**
+     * Agrega una pulga normal automáticamente sin evento de teclado.
+     */
     public void agregarPulgaNormalAutomatica() {
         int width = 20;
         int height = 20;
@@ -108,9 +137,12 @@ public class CampoDeBatalla {
 
         PulgaNormal pulga = new PulgaNormal(x, y, width, height, Color.RED, maxX, maxY);
         pulgasNormales.add(pulga);
-        new Thread((java.lang.Runnable) (Runnable) pulga).start(); // Sin cast ni bucle infinito
+        new Thread((java.lang.Runnable) (Runnable) pulga).start(); // Inicia en un nuevo hilo
     }
 
+    /**
+     * Agrega una pulga mutante automáticamente.
+     */
     public void agregarPulgaMutanteAutomatica() {
         int width = 20;
         int height = 20;
@@ -123,9 +155,15 @@ public class CampoDeBatalla {
 
         PulgaMutante pulga = new PulgaMutante(x, y, width, height, Color.GREEN, maxX, maxY);
         pulgasMutantes.add(pulga);
-        new Thread((java.lang.Runnable) pulga).start(); // Sin cast ni bucle infinito
+        new Thread((java.lang.Runnable) pulga).start(); // Inicia en nuevo hilo
     }
-    
+
+    /**
+     * Maneja eventos de teclado para controlar la simulación.
+     *
+     * @param e Evento de teclado
+     * @throws IOException En caso de error al guardar puntaje
+     */
     public void handleKey(KeyEvent e) throws IOException {
         switch (e.getKeyCode()) {
             case KeyEvent.VK_UP:
@@ -149,7 +187,7 @@ public class CampoDeBatalla {
                 terminarSimulacion(e);
                 break;
             case KeyEvent.VK_P:
-                agregarPulgaNormalAutomatica(); // Usando 'p' como en el enunciado
+                agregarPulgaNormalAutomatica();
                 break;
             case KeyEvent.VK_SPACE:
                 destruirMitadPulgas();
@@ -157,21 +195,19 @@ public class CampoDeBatalla {
         }
     }
 
-    
+    /**
+     * Elimina la mitad de las pulgas activas en el campo (priorizando normales).
+     */
     private void destruirMitadPulgas() {
-        // Crear copias de las listas para evitar ConcurrentModificationException
         ArrayList<PulgaNormal> copiaNormales = new ArrayList<>(pulgasNormales);
         ArrayList<PulgaMutante> copiaMutantes = new ArrayList<>(pulgasMutantes);
 
         int totalPulgas = copiaNormales.size() + copiaMutantes.size();
-        if (totalPulgas == 0) {
-            return;
-        }
+        if (totalPulgas == 0) return;
 
         int cantidadADestruir = (int) Math.ceil(totalPulgas / 2.0);
         int destruidas = 0;
 
-        // Destruir mitad de las pulgas normales
         int aDestruirNormales = Math.min(copiaNormales.size(), cantidadADestruir);
         for (int i = 0; i < aDestruirNormales; i++) {
             PulgaNormal p = copiaNormales.get(i);
@@ -181,7 +217,6 @@ public class CampoDeBatalla {
             destruidas++;
         }
 
-        // Si aún necesitamos destruir más, tomamos de las mutantes
         if (destruidas < cantidadADestruir) {
             int aDestruirMutantes = cantidadADestruir - destruidas;
             for (int i = 0; i < aDestruirMutantes && i < copiaMutantes.size(); i++) {
@@ -194,7 +229,7 @@ public class CampoDeBatalla {
     }
 
     /**
-     * Agrega una nueva pulga mutante al campo con la tecla N
+     * Agrega una pulga mutante al presionar 'N'.
      *
      * @param e Evento de teclado
      * @since 2.0
@@ -216,10 +251,9 @@ public class CampoDeBatalla {
         }
     }
 
+    // Métodos privados de colisión
     private boolean colisionConSoldado(int x, int y, int width, int height) {
-        if (soldado == null) {
-            return false;
-        }
+        if (soldado == null) return false;
         return x < soldado.getX() + soldado.getWidth()
                 && x + width > soldado.getX()
                 && y < soldado.getY() + soldado.getHeight()
@@ -231,29 +265,25 @@ public class CampoDeBatalla {
             if (x < p.getX() + p.getWidth()
                     && x + width > p.getX()
                     && y < p.getY() + p.getHeight()
-                    && y + height > p.getY()) {
-                return true;
-            }
+                    && y + height > p.getY()) return true;
         }
         for (PulgaMutante p : pulgasMutantes) {
             if (x < p.getX() + p.getWidth()
                     && x + width > p.getX()
                     && y < p.getY() + p.getHeight()
-                    && y + height > p.getY()) {
-                return true;
-            }
+                    && y + height > p.getY()) return true;
         }
         return false;
     }
 
     /**
-     * Hace saltar todas las pulgas a posiciones aleatorias con la tecla B
+     * Hace que todas las pulgas salten a nuevas posiciones aleatorias al presionar 'S'.
      *
      * @param e Evento de teclado
      * @since 2.0
      */
     public void saltarPulgas(KeyEvent e) {
-        if (e.getKeyCode() == KeyEvent.VK_S) { // Corregido a VK_S
+        if (e.getKeyCode() == KeyEvent.VK_S) {
             for (PulgaNormal pulga : new ArrayList<>(pulgasNormales)) {
                 reposicionarPulga(pulga);
             }
@@ -263,6 +293,7 @@ public class CampoDeBatalla {
         }
     }
 
+    // Reposiciona una pulga en coordenadas válidas
     private void reposicionarPulga(Pulga pulga) {
         int width = pulga.getWidth();
         int height = pulga.getHeight();
@@ -277,39 +308,27 @@ public class CampoDeBatalla {
         pulga.setY(y);
     }
 
-    /**
-     * Guarda un nuevo puntaje en el archivo de puntuaciones, manteniendo solo
-     * los 10 mejores.
-     *
-     * @param nuevoPuntaje Puntaje a guardar (debe ser un entero positivo).
-     * @throws IOException Si hay un error al escribir en el archivo.
-     * @since 1.0
-     */
+    // Guarda el puntaje en el archivo
     public void guardarPuntaje(int nuevoPuntaje) throws IOException {
-        // 1. Leer puntajes existentes
         ArrayList<String> lineas = lector.leer(archivoPuntajes.getPath());
         ArrayList<Integer> puntajes = new ArrayList<>();
 
-        // 2. Convertir líneas a números
         for (String linea : lineas) {
             if (!linea.isBlank()) {
                 try {
                     puntajes.add(Integer.parseInt(linea.trim()));
                 } catch (NumberFormatException e) {
-                    // Ignorar líneas que no son números
+                    // Ignorar
                 }
             }
         }
 
-        // 3. Agregar nuevo puntaje al final
         puntajes.add(nuevoPuntaje);
 
-        // 4. Mantener solo los últimos 10 puntajes
         while (puntajes.size() > 10) {
-            puntajes.remove(0); // Elimina el más antiguo
+            puntajes.remove(0);
         }
 
-        // 5. Escribir de vuelta al archivo
         ArrayList<String> nuevasLineas = new ArrayList<>();
         for (int p : puntajes) {
             nuevasLineas.add(String.valueOf(p));
@@ -318,18 +337,17 @@ public class CampoDeBatalla {
         escritor.escribir(nuevasLineas, archivoPuntajes.getPath());
     }
 
-
     /**
-     * Termina la simulación y guarda el puntaje con la tecla Q
+     * Termina la simulación al presionar 'Q' y guarda el puntaje.
      *
      * @param e Evento de teclado
+     * @throws IOException Si hay error de escritura
      * @since 2.0
      */
     public void terminarSimulacion(KeyEvent e) throws IOException {
         if (e.getKeyCode() == KeyEvent.VK_Q) {
             detenerPulgas();
             guardarPuntaje(puntaje);
-            // Reiniciar puntaje para la próxima partida
             this.puntaje = 0;
         }
     }
@@ -340,48 +358,39 @@ public class CampoDeBatalla {
     }
 
     /**
-     * Lee los puntajes almacenados en el archivo y los devuelve como una lista
-     * de enteros.
+     * Devuelve la lista de puntajes ordenados de mayor a menor.
      *
-     * @return Lista de puntajes ordenados de mayor a menor.
-     * @throws IOException Si ocurre un error al leer el archivo.
+     * @return Lista de puntajes
+     * @throws IOException Si ocurre un error al leer el archivo
      * @since 1.0
      */
     public ArrayList<Integer> leerPuntajes() throws IOException {
-        ArrayList<String> lineas = lector.leer(archivoPuntajes.getPath()); // Usa el Lector para leer líneas
+        ArrayList<String> lineas = lector.leer(archivoPuntajes.getPath());
         ArrayList<Integer> puntajes = new ArrayList<>();
 
         for (String linea : lineas) {
             if (!linea.isBlank()) {
                 try {
-                    puntajes.add(Integer.parseInt(linea.trim())); // Convierte cada línea a entero
+                    puntajes.add(Integer.parseInt(linea.trim()));
                 } catch (NumberFormatException e) {
-                    // Ignorar líneas que no son números
+                    // Ignorar
                 }
             }
         }
 
-        Collections.sort(puntajes, Collections.reverseOrder()); // Ordena de mayor a menor
+        Collections.sort(puntajes, Collections.reverseOrder());
         return puntajes;
     }
 
-    public ArrayList<PulgaNormal> getPulgasNormales() {
-        return pulgasNormales;
-    }
+    // Métodos para obtener y eliminar pulgas
+    public ArrayList<PulgaNormal> getPulgasNormales() { return pulgasNormales; }
 
-    public ArrayList<PulgaMutante> getPulgasMutantes() {
-        return pulgasMutantes;
-    }
+    public ArrayList<PulgaMutante> getPulgasMutantes() { return pulgasMutantes; }
 
-    public void eliminarPulgaNormal(PulgaNormal p) {
-        pulgasNormales.remove(p);
-    }
+    public void eliminarPulgaNormal(PulgaNormal p) { pulgasNormales.remove(p); }
 
-    public void eliminarPulgaMutante(PulgaMutante p) {
-        pulgasMutantes.remove(p);
-    }
+    public void eliminarPulgaMutante(PulgaMutante p) { pulgasMutantes.remove(p); }
 
-    public void aumentarPuntaje(int puntos) {
-        puntaje += puntos;
-    }
+    // Aumenta el puntaje del jugador
+    public void aumentarPuntaje(int puntos) { puntaje += puntos; }
 }

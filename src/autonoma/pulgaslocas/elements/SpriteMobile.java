@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package autonoma.pulgaslocas.elements;
 
 import java.awt.Color;
@@ -10,22 +6,22 @@ import java.awt.Graphics;
 /**
  * Representa un objeto móvil dentro del entorno del juego.
  * <p>
- * Esta clase contiene las propiedades básicas de movimiento en los ejes X e Y,
- * así como un método para representar su trayectoria. Sirve como clase base para
+ * Esta clase extiende a {@link Sprite} y añade capacidades de movimiento
+ * mediante velocidades en los ejes X e Y. Se utiliza como clase base para
  * elementos móviles como las pulgas.
  * </p>
  * 
- * @author  Juan José Morales A.
+ * @author Juan José Morales A.
  * @version 20250506
- * @since   1.0
+ * @since 1.0
  */
+public class SpriteMobile extends Sprite {
+    
     /**
      * Velocidad del objeto en el eje X.
      * 
      * @since 1.0
      */
-
-public class SpriteMobile extends Sprite {
     protected int velocidadX;
 
     /**
@@ -35,11 +31,19 @@ public class SpriteMobile extends Sprite {
      */
     protected int velocidadY;
     
-    
+    /**
+     * Crea un objeto SpriteMobile con posición, tamaño y color especificados.
+     *
+     * @param x Coordenada X inicial.
+     * @param y Coordenada Y inicial.
+     * @param width Ancho del sprite.
+     * @param height Alto del sprite.
+     * @param color Color del sprite.
+     * @since 1.0
+     */
     public SpriteMobile(int x, int y, int width, int height, Color color) {
         super(x, y, width, height, color);
     }
-
 
     /**
      * Imprime la trayectoria del sprite en la salida estándar.
@@ -47,19 +51,23 @@ public class SpriteMobile extends Sprite {
      * Este método puede ser sobrescrito por clases hijas para definir un comportamiento
      * más específico de movimiento o trayecto.
      * </p>
-     * 
+     *
      * @since 1.0
      */
-
-
     public void trayectoria() {
         System.out.println("trayectoria del sprite.");
     }
 
+    /**
+     * Método que debe ser sobrescrito para dibujar el sprite móvil.
+     * Actualmente no implementado.
+     *
+     * @param g El contexto gráfico donde se dibujará el sprite.
+     * @throws UnsupportedOperationException Indica que el método no está aún soportado.
+     * @since 1.0
+     */
     @Override
     public void draw(Graphics g) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        throw new UnsupportedOperationException("Not supported yet."); 
     }
-    
 }
-
