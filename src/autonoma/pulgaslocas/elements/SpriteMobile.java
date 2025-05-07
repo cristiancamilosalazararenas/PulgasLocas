@@ -4,6 +4,9 @@
  */
 package autonoma.pulgaslocas.elements;
 
+import java.awt.Color;
+import java.awt.Graphics;
+
 /**
  * Representa un objeto móvil dentro del entorno del juego.
  * <p>
@@ -16,13 +19,13 @@ package autonoma.pulgaslocas.elements;
  * @version 20250506
  * @since   1.0
  */
-public class SpriteMobile {
-
     /**
      * Velocidad del objeto en el eje X.
      * 
      * @since 1.0
      */
+
+public class SpriteMobile extends Sprite {
     protected int velocidadX;
 
     /**
@@ -31,6 +34,12 @@ public class SpriteMobile {
      * @since 1.0
      */
     protected int velocidadY;
+    
+    
+    public SpriteMobile(int x, int y, int width, int height, Color color) {
+        super(x, y, width, height, color);
+    }
+
 
     /**
      * Imprime la trayectoria del sprite en la salida estándar.
@@ -41,8 +50,15 @@ public class SpriteMobile {
      * 
      * @since 1.0
      */
+
+
     public void trayectoria() {
         System.out.println("trayectoria del sprite.");
+    }
+
+    @Override
+    public void draw(Graphics g) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 }
 

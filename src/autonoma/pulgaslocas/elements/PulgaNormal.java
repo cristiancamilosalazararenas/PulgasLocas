@@ -4,6 +4,8 @@
  */
 package autonoma.pulgaslocas.elements;
 
+import java.awt.Color;
+
 /**
  * Representa una pulga normal en el juego.
  * <p>
@@ -18,18 +20,8 @@ package autonoma.pulgaslocas.elements;
  */
 public class PulgaNormal extends Pulga {
 
-    /**
-     * Crea una nueva instancia de una pulga normal con los valores especificados.
-     * 
-     * @param vida  Cantidad de vida inicial de la pulga.
-     * @param velX  Velocidad de movimiento horizontal.
-     * @param velY  Velocidad de movimiento vertical.
-     * @since 1.0
-     */
-    public PulgaNormal(int vida, int velX, int velY) {
-        this.cantidadVida = vida;
-        this.velocidadX = velX;
-        this.velocidadY = velY;
+    public PulgaNormal(int x, int y, int width, int height, Color color) {
+        super(x, y, width, height, color);
     }
 
     /**

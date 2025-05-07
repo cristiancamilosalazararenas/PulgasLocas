@@ -4,6 +4,8 @@
  */
 package autonoma.pulgaslocas.elements;
 
+import java.awt.Color;
+
 /**
  * Representa una pulga mutante en el juego.
  * <p>
@@ -17,8 +19,6 @@ package autonoma.pulgaslocas.elements;
  * @since   1.0
  * @see     autonoma.pulgaslocas.elements.Pulga
  */
-public class PulgaMutante extends Pulga {
-
     /**
      * Crea una nueva instancia de una pulga mutante con la vida y velocidad especificadas.
      * 
@@ -27,10 +27,10 @@ public class PulgaMutante extends Pulga {
      * @param velY  Velocidad de desplazamiento en el eje Y.
      * @since 1.0
      */
-    public PulgaMutante(int vida, int velX, int velY) {
-        this.cantidadVida = vida;
-        this.velocidadX = velX;
-        this.velocidadY = velY;
+    public class PulgaMutante extends Pulga{
+
+    public PulgaMutante(int x, int y, int width, int height, Color color) {
+        super(x, y, width, height, color);
     }
 
     /**

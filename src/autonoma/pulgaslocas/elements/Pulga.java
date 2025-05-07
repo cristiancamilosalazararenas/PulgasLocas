@@ -4,6 +4,8 @@
  */
 package autonoma.pulgaslocas.elements;
 
+import java.awt.Color;
+
 /**
  * Clase abstracta que representa una Pulga dentro del juego.
  * <p>
@@ -29,4 +31,8 @@ public abstract class Pulga extends SpriteMobile implements Runnable {
      * @since 1.0
      */
     protected int cantidadVida;
+
+    public Pulga(int x, int y, int width, int height, Color color) {
+        super(x, y, width, height, color);
+    }
 }
