@@ -36,15 +36,11 @@ public abstract class Sprite {
      * Detecta colisión con otro sprite
      * @return true si hay colisión
      */
-    public boolean hit(Sprite other)
-    {
-        if(x < other.getX()+other.getWidth() &&
-           x+width > other.getX() &&
-           y < other.getY()+other.getHeight() &&
-           y+height > other.getY())
-            return true;
-        
-        return false;
+    public boolean hit(int x, int y, int width, int height) {
+        return this.x < x + width &&
+               this.x + this.width > x &&
+               this.y < y + height &&
+               this.y + this.height > y;
     }
     // Getters y setters 
     public int getX() {

@@ -187,7 +187,26 @@ public class CampoDeBatalla {
         pulgasNormales.forEach(Pulga::detener);
         pulgasMutantes.forEach(Pulga::detener);
     }
+    
+    /**
+    * Lee los puntajes almacenados en el archivo y los devuelve como una lista de enteros.
+    * @return Lista de puntajes ordenados de mayor a menor.
+    * @throws IOException Si ocurre un error al leer el archivo.
+    * @since 1.0
+    */
+   public ArrayList<Integer> leerPuntajes() throws IOException {
+       ArrayList<String> lineas = lector.leer(archivoPuntajes.getPath()); // Usa el Lector para leer líneas
+       ArrayList<Integer> puntajes = new ArrayList<>();
 
+       for (String linea : lineas) {
+           if (!linea.isBlank()) {
+               puntajes.add(Integer.parseInt(linea.trim())); // Convierte cada línea a entero
+           }
+       }
+
+       Collections.sort(puntajes, Collections.reverseOrder()); // Ordena de mayor a menor
+       return puntajes;
+   }
     
     public ArrayList<PulgaNormal> getPulgasNormales() {
         return pulgasNormales;
