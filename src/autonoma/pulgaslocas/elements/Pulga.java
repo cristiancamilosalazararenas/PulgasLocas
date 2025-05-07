@@ -5,9 +5,28 @@
 package autonoma.pulgaslocas.elements;
 
 /**
- *
- * @author juanb
+ * Clase abstracta que representa una Pulga dentro del juego.
+ * <p>
+ * Esta clase define el comportamiento básico de una pulga móvil con capacidad de ejecución
+ * en un hilo independiente. Hereda de {@link SpriteMobile} y puede ser utilizada como base
+ * para diferentes tipos de pulgas con comportamientos específicos.
+ * </p>
+ * 
+ * @author  Juan José Morales A.
+ * @version 20250506
+ * @since   1.0
+ * @see     autonoma.pulgaslocas.elements.SpriteMobile
  */
-public abstract class Pulga extends SpriteMobile implements Runnable{
+public abstract class Pulga extends SpriteMobile implements Runnable {
+    
+    /**
+     * Cantidad de vida que posee la pulga.
+     * <p>
+     * Este atributo representa la cantidad de puntos de vida actuales de la pulga. 
+     * Puede ser modificado por eventos del juego como colisiones o ataques.
+     * </p>
+     * 
+     * @since 1.0
+     */
     protected int cantidadVida;
 }
