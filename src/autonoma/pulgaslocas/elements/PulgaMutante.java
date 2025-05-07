@@ -4,16 +4,18 @@
  */
 package autonoma.pulgaslocas.elements;
 
+import java.awt.Color;
+
 /**
  *
  * @author juanb
  */
 public class PulgaMutante extends Pulga{
-    public PulgaMutante(int vida, int velX, int velY) {
-        this.cantidadVida = vida;
-        this.velocidadX = velX;
-        this.velocidadY = velY;
+
+    public PulgaMutante(int x, int y, int width, int height, Color color) {
+        super(x, y, width, height, color);
     }
+    
     @Override
     public void run() {
         throw new UnsupportedOperationException("Pulga mutante corriendo con velocidad (" + velocidadX + ", " + velocidadY + ")"); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
