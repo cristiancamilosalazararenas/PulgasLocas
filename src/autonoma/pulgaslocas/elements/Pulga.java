@@ -4,10 +4,16 @@
  */
 package autonoma.pulgaslocas.elements;
 
+import java.awt.Color;
+
 /**
  *
  * @author juanb
  */
 public abstract class Pulga extends SpriteMobile implements Runnable{
     protected int cantidadVida;
+
+    public Pulga(int x, int y, int width, int height, Color color) {
+        super(x, y, width, height, color);
+    }
 }
