@@ -20,23 +20,31 @@ import java.awt.Color;
  */
 public class PulgaNormal extends Pulga {
 
-    public PulgaNormal(int x, int y, int width, int height, Color color) {
-        super(x, y, width, height, color);
+    public PulgaNormal(int x, int y, int width, int height, Color color, int maxX, int maxY) {
+        super(x, y, width, height, color, maxX, maxY);
+        this.velocidadX = (Math.random() > 0.5) ? 2 : -2;
+        this.velocidadY = (Math.random() > 0.5) ? 2 : -2;
     }
 
-    /**
-     * Método que contiene la lógica de ejecución en un hilo para la pulga normal.
-     * <p>
-     * Actualmente no implementa comportamiento concreto y lanza una excepción para indicar
-     * que aún no está soportado.
-     * </p>
-     * 
-     * @throws UnsupportedOperationException si se intenta ejecutar sin una implementación válida.
-     * @since 1.0
-     */
     @Override
     public void run() {
-        throw new UnsupportedOperationException("Pulga normal corriendo con velocidad (" + velocidadX + ", " + velocidadY + ")");
+        while(activo){
+            mover();
+            try {
+                Thread.sleep(50);
+            } catch (InterruptedException ex) {}
+        }
+    }
+
+    private void mover() {
+        int newX = x + velocidadX;
+        int newY = y + velocidadY;
+        
+        if(newX <= 0 || newX >= maxX - width) velocidadX *= -1;
+        if(newY <= 0 || newY >= maxY - height) velocidadY *= -1;
+        
+        x = Math.max(0, Math.min(newX, maxX - width));
+        y = Math.max(0, Math.min(newY, maxY - height));
     }
 }
 

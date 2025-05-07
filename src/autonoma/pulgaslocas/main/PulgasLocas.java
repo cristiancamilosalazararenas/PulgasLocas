@@ -1,6 +1,8 @@
 package autonoma.pulgaslocas.main;
 
 import autonoma.pulgaslocas.elements.CampoDeBatalla;
+import autonoma.pulgaslocas.elements.Soldado;
+import java.awt.Color;
 import java.io.IOException;
 import java.util.ArrayList;
 
@@ -9,7 +11,14 @@ public class PulgasLocas {
     public static void main(String[] args) {
         try {
             String ruta = "puntajes.txt";
-            CampoDeBatalla campo = new CampoDeBatalla(ruta);
+            
+            // Crear soldado con valores por defecto (no se usará en esta prueba)
+            Soldado soldado = new Soldado(0, 0, 30, 30, Color.BLUE, null);
+            
+            // Crear campo de batalla con constructor actualizado
+            CampoDeBatalla campo = new CampoDeBatalla(ruta, soldado);
+            
+            // Prueba del sistema de puntajes
             campo.guardarPuntaje(250);
             campo.guardarPuntaje(320);
             campo.guardarPuntaje(150);

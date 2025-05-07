@@ -6,45 +6,32 @@ package autonoma.pulgaslocas.elements;
 
 import java.awt.Color;
 
-/**
- * Representa una pulga mutante en el juego.
- * <p>
- * Esta clase extiende {@link Pulga} y define una versión especial de pulga con potencial
- * para comportamientos avanzados o distintos a la pulga normal. Actualmente solo configura
- * los valores iniciales de vida y velocidad.
- * </p>
- * 
- * @author  Juan José Morales A.
- * @version 20250506
- * @since   1.0
- * @see     autonoma.pulgaslocas.elements.Pulga
- */
-    /**
-     * Crea una nueva instancia de una pulga mutante con la vida y velocidad especificadas.
-     * 
-     * @param vida  Cantidad de vida inicial de la pulga.
-     * @param velX  Velocidad de desplazamiento en el eje X.
-     * @param velY  Velocidad de desplazamiento en el eje Y.
-     * @since 1.0
-     */
-    public class PulgaMutante extends Pulga{
+public class PulgaMutante extends Pulga {
 
-    public PulgaMutante(int x, int y, int width, int height, Color color) {
-        super(x, y, width, height, color);
+    public PulgaMutante(int x, int y, int width, int height, Color color, int maxX, int maxY) {
+        super(x, y, width, height, color, maxX, maxY);
+        this.velocidadX = (Math.random() > 0.5) ? 4 : -4;
+        this.velocidadY = (Math.random() > 0.5) ? 4 : -4;
     }
 
-    /**
-     * Ejecuta el comportamiento de la pulga mutante en un hilo.
-     * <p>
-     * Actualmente, este método lanza una excepción para indicar que aún no se ha
-     * implementado la lógica de movimiento o comportamiento especial.
-     * </p>
-     * 
-     * @throws UnsupportedOperationException si se intenta ejecutar sin implementación.
-     * @since 1.0
-     */
     @Override
     public void run() {
-        throw new UnsupportedOperationException("Pulga mutante corriendo con velocidad (" + velocidadX + ", " + velocidadY + ")");
+        while(activo){
+            mover();
+            try {
+                Thread.sleep(30);
+            } catch (InterruptedException ex) {}
+        }
+    }
+
+    private void mover() {
+        int newX = x + velocidadX;
+        int newY = y + velocidadY;
+        
+        if(newX <= 0 || newX >= maxX - width) velocidadX *= -1;
+        if(newY <= 0 || newY >= maxY - height) velocidadY *= -1;
+        
+        x = Math.max(0, Math.min(newX, maxX - width));
+        y = Math.max(0, Math.min(newY, maxY - height));
     }
 }

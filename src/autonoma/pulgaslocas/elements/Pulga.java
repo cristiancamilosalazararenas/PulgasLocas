@@ -30,9 +30,31 @@ public abstract class Pulga extends SpriteMobile implements Runnable {
      * 
      * @since 1.0
      */
-    protected int cantidadVida;
+        protected int cantidadVida;
+    protected volatile boolean activo;
+    protected int maxX;
+    protected int maxY;
 
-    public Pulga(int x, int y, int width, int height, Color color) {
+    public Pulga(int x, int y, int width, int height, Color color, int maxX, int maxY) {
         super(x, y, width, height, color);
+        this.maxX = maxX;
+        this.maxY = maxY;
+        this.activo = true;
+        this.cantidadVida = 100;
     }
+    
+    public void detener() {
+        activo = false;
+    }
+    
+    public int getVida() { 
+        return cantidadVida;
+    }
+    public void reducirVida(int danio) { 
+        cantidadVida -= danio; 
+    }
+
+    @Override
+    public abstract void run();
+
 }
