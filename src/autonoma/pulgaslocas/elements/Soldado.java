@@ -53,34 +53,36 @@ public class Soldado extends Sprite {
         int clickX = e.getX();
         int clickY = e.getY();
 
-        // Crear copias de las listas para evitar ConcurrentModificationException
         ArrayList<PulgaNormal> normalesAChequear = new ArrayList<>(campo.getPulgasNormales());
         ArrayList<PulgaMutante> mutantesAChequear = new ArrayList<>(campo.getPulgasMutantes());
 
         for (PulgaNormal pulga : normalesAChequear) {
             if (pulga.hit(clickX, clickY, 1, 1)) {
-                pulga.reducirVida(10);
+                pulga.reducirVida(100); // Daño suficiente para matar en un clic
                 if (pulga.getVida() <= 0) {
+                    pulga.detener();
                     campo.eliminarPulgaNormal(pulga);
                     campo.aumentarPuntaje(10);
                 }
-                break; // La pistola impacta solo una pulga por clic
+                break;
             }
         }
 
         for (PulgaMutante pulga : mutantesAChequear) {
             if (pulga.hit(clickX, clickY, 1, 1)) {
-                pulga.reducirVida(10);
+                pulga.reducirVida(50); // Reduce vida a 50 para conversión
                 if (pulga.getVida() <= 0) {
+                    pulga.detener();
                     campo.eliminarPulgaMutante(pulga);
                     campo.aumentarPuntaje(20);
-                } else if (pulga.getVida() == 50) { // Si es impactada una vez, se convierte en normal
+                } else if (pulga.getVida() == 50) {
+                    pulga.detener();
                     campo.eliminarPulgaMutante(pulga);
                     PulgaNormal nuevaNormal = new PulgaNormal(pulga.getX(), pulga.getY(), pulga.getWidth(), pulga.getHeight(), Color.RED, campo.getMaxX(), campo.getMaxY());
                     campo.getPulgasNormales().add(nuevaNormal);
                     new Thread((java.lang.Runnable) nuevaNormal).start();
                 }
-                break; // La pistola impacta solo una pulga por clic
+                break;
             }
         }
     }
@@ -90,7 +92,6 @@ public class Soldado extends Sprite {
         int centroY = e.getY();
         int radio = 30;
 
-        // Crear copias de las listas para evitar ConcurrentModificationException
         ArrayList<PulgaNormal> normalesAChequear = new ArrayList<>(campo.getPulgasNormales());
         ArrayList<PulgaMutante> mutantesAChequear = new ArrayList<>(campo.getPulgasMutantes());
 
@@ -100,8 +101,9 @@ public class Soldado extends Sprite {
             double distancia = Math.sqrt(Math.pow(pulgaX - centroX, 2) + Math.pow(pulgaY - centroY, 2));
 
             if (distancia <= radio) {
-                pulga.reducirVida(20);
+                pulga.reducirVida(100); // Daño letal
                 if (pulga.getVida() <= 0) {
+                    pulga.detener();
                     campo.eliminarPulgaNormal(pulga);
                     campo.aumentarPuntaje(10);
                 }
@@ -114,11 +116,13 @@ public class Soldado extends Sprite {
             double distancia = Math.sqrt(Math.pow(pulgaX - centroX, 2) + Math.pow(pulgaY - centroY, 2));
 
             if (distancia <= radio) {
-                pulga.reducirVida(20);
+                pulga.reducirVida(50); // Daño para conversión
                 if (pulga.getVida() <= 0) {
+                    pulga.detener();
                     campo.eliminarPulgaMutante(pulga);
                     campo.aumentarPuntaje(20);
-                } else if (pulga.getVida() <= 50 && pulga.getVida() > 30) { // Si recibe daño y aún le queda para convertirse en normal
+                } else if (pulga.getVida() == 50) {
+                    pulga.detener();
                     campo.eliminarPulgaMutante(pulga);
                     PulgaNormal nuevaNormal = new PulgaNormal(pulga.getX(), pulga.getY(), pulga.getWidth(), pulga.getHeight(), Color.RED, campo.getMaxX(), campo.getMaxY());
                     campo.getPulgasNormales().add(nuevaNormal);

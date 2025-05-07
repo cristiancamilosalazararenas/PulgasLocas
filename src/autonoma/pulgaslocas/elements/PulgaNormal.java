@@ -35,14 +35,17 @@ public class PulgaNormal extends Pulga {
 
     @Override
     public void run() {
-        while(activo){
+        System.out.println("Hilo PulgaNormal iniciado"); // Debug
+        while (activo) {
             mover();
             try {
                 Thread.sleep(50);
-            } catch (InterruptedException ex) {}
+            } catch (InterruptedException ex) {
+                System.out.println("Hilo interrumpido"); // Debug
+                Thread.currentThread().interrupt();
+            }
         }
     }
-
     private void mover() {
         int newX = x + velocidadX;
         int newY = y + velocidadY;

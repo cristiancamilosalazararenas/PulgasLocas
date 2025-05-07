@@ -23,11 +23,13 @@ public class PulgaMutante extends Pulga {
 
     @Override
     public void run() {
-        while(activo){
+        while(activo) {
             mover();
             try {
                 Thread.sleep(30);
-            } catch (InterruptedException ex) {}
+            } catch (InterruptedException ex) {
+                Thread.currentThread().interrupt();
+            }
         }
     }
 

@@ -9,7 +9,7 @@ import java.awt.event.KeyEvent;
 
 public class CampoDeBatalla {
 
-    private File archivoPuntajes;
+     private File archivoPuntajes;
     private final Lector lector;
     private final Escritor escritor;
     private ArrayList<PulgaNormal> pulgasNormales;
@@ -108,7 +108,7 @@ public class CampoDeBatalla {
 
         PulgaNormal pulga = new PulgaNormal(x, y, width, height, Color.RED, maxX, maxY);
         pulgasNormales.add(pulga);
-        new Thread((java.lang.Runnable) pulga).start();
+        new Thread((java.lang.Runnable) (Runnable) pulga).start(); // Sin cast ni bucle infinito
     }
 
     public void agregarPulgaMutanteAutomatica() {
@@ -123,9 +123,9 @@ public class CampoDeBatalla {
 
         PulgaMutante pulga = new PulgaMutante(x, y, width, height, Color.GREEN, maxX, maxY);
         pulgasMutantes.add(pulga);
-        new Thread((java.lang.Runnable) pulga).start();
+        new Thread((java.lang.Runnable) pulga).start(); // Sin cast ni bucle infinito
     }
-
+    
     public void handleKey(KeyEvent e) throws IOException {
         switch (e.getKeyCode()) {
             case KeyEvent.VK_UP:
@@ -157,25 +157,39 @@ public class CampoDeBatalla {
         }
     }
 
+    
     private void destruirMitadPulgas() {
-        int totalPulgas = pulgasNormales.size() + pulgasMutantes.size();
-        int cantidadADestruir = totalPulgas / 2;
+        // Crear copias de las listas para evitar ConcurrentModificationException
+        ArrayList<PulgaNormal> copiaNormales = new ArrayList<>(pulgasNormales);
+        ArrayList<PulgaMutante> copiaMutantes = new ArrayList<>(pulgasMutantes);
+
+        int totalPulgas = copiaNormales.size() + copiaMutantes.size();
+        if (totalPulgas == 0) {
+            return;
+        }
+
+        int cantidadADestruir = (int) Math.ceil(totalPulgas / 2.0);
         int destruidas = 0;
 
-        // Destruir pulgas normales primero
-        for (int i = pulgasNormales.size() - 1; i >= 0 && destruidas < cantidadADestruir; i--) {
-            pulgasNormales.get(i).detener();
-            pulgasNormales.remove(i);
+        // Destruir mitad de las pulgas normales
+        int aDestruirNormales = Math.min(copiaNormales.size(), cantidadADestruir);
+        for (int i = 0; i < aDestruirNormales; i++) {
+            PulgaNormal p = copiaNormales.get(i);
+            p.detener();
+            pulgasNormales.remove(p);
             aumentarPuntaje(10);
             destruidas++;
         }
 
-        // Destruir pulgas mutantes si aún faltan
-        for (int i = pulgasMutantes.size() - 1; i >= 0 && destruidas < cantidadADestruir; i--) {
-            pulgasMutantes.get(i).detener();
-            pulgasMutantes.remove(i);
-            aumentarPuntaje(20);
-            destruidas++;
+        // Si aún necesitamos destruir más, tomamos de las mutantes
+        if (destruidas < cantidadADestruir) {
+            int aDestruirMutantes = cantidadADestruir - destruidas;
+            for (int i = 0; i < aDestruirMutantes && i < copiaMutantes.size(); i++) {
+                PulgaMutante p = copiaMutantes.get(i);
+                p.detener();
+                pulgasMutantes.remove(p);
+                aumentarPuntaje(20);
+            }
         }
     }
 
@@ -287,13 +301,12 @@ public class CampoDeBatalla {
             }
         }
 
-        // 3. Agregar nuevo puntaje y ordenar de mayor a menor
+        // 3. Agregar nuevo puntaje al final
         puntajes.add(nuevoPuntaje);
-        Collections.sort(puntajes, Collections.reverseOrder());
 
-        // 4. Mantener solo los 10 mejores
-        if (puntajes.size() > 10) {
-            puntajes = new ArrayList<>(puntajes.subList(0, 10));
+        // 4. Mantener solo los últimos 10 puntajes
+        while (puntajes.size() > 10) {
+            puntajes.remove(0); // Elimina el más antiguo
         }
 
         // 5. Escribir de vuelta al archivo
@@ -305,6 +318,7 @@ public class CampoDeBatalla {
         escritor.escribir(nuevasLineas, archivoPuntajes.getPath());
     }
 
+
     /**
      * Termina la simulación y guarda el puntaje con la tecla Q
      *
@@ -315,7 +329,8 @@ public class CampoDeBatalla {
         if (e.getKeyCode() == KeyEvent.VK_Q) {
             detenerPulgas();
             guardarPuntaje(puntaje);
-            // Aquí podrías indicar que la simulación terminó, quizás cambiando un estado
+            // Reiniciar puntaje para la próxima partida
+            this.puntaje = 0;
         }
     }
 

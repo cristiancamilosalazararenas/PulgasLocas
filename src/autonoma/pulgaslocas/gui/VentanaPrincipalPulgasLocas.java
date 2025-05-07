@@ -136,6 +136,12 @@ public class VentanaPrincipalPulgasLocas extends javax.swing.JFrame {
         PanelComandos = new javax.swing.JPanel();
         TitulosComandoslbl = new javax.swing.JLabel();
         Comandoslbl = new javax.swing.JLabel();
+        Comandoslbl1 = new javax.swing.JLabel();
+        Comandoslbl2 = new javax.swing.JLabel();
+        Comandoslbl3 = new javax.swing.JLabel();
+        Comandoslbl4 = new javax.swing.JLabel();
+        Comandoslbl5 = new javax.swing.JLabel();
+        Comandoslbl6 = new javax.swing.JLabel();
         PanelPuntajes = new javax.swing.JPanel();
         TituloPuntajeslbl = new javax.swing.JLabel();
         Puntajeslbl = new javax.swing.JLabel();
@@ -157,20 +163,61 @@ public class VentanaPrincipalPulgasLocas extends javax.swing.JFrame {
         TitulosComandoslbl.setForeground(new java.awt.Color(255, 255, 255));
         TitulosComandoslbl.setText("COMANDOS");
 
-        Comandoslbl.setText("Pulga normal -->");
+        Comandoslbl.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        Comandoslbl.setForeground(new java.awt.Color(255, 255, 255));
+        Comandoslbl.setText("       Pulga Normal --> M");
+
+        Comandoslbl1.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        Comandoslbl1.setForeground(new java.awt.Color(255, 255, 255));
+        Comandoslbl1.setText("     Disparar Misil --> Space");
+        Comandoslbl1.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+
+        Comandoslbl2.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        Comandoslbl2.setForeground(new java.awt.Color(255, 255, 255));
+        Comandoslbl2.setText("       Pulga Mutante --> N");
+
+        Comandoslbl3.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        Comandoslbl3.setForeground(new java.awt.Color(255, 255, 255));
+        Comandoslbl3.setText("   Disparar Pistola --> Click");
+        Comandoslbl3.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+
+        Comandoslbl4.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        Comandoslbl4.setForeground(new java.awt.Color(255, 255, 255));
+        Comandoslbl4.setText("       Pulgas Saltar --> S");
+        Comandoslbl4.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+
+        Comandoslbl5.setBackground(new java.awt.Color(0, 0, 0));
+        Comandoslbl5.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        Comandoslbl5.setForeground(new java.awt.Color(255, 255, 255));
+        Comandoslbl5.setText("     Guardar puntaje y salir --> Q");
+        Comandoslbl5.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+
+        Comandoslbl6.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        Comandoslbl6.setForeground(new java.awt.Color(255, 255, 255));
+        Comandoslbl6.setText("----------------------------------");
+        Comandoslbl6.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
 
         javax.swing.GroupLayout PanelComandosLayout = new javax.swing.GroupLayout(PanelComandos);
         PanelComandos.setLayout(PanelComandosLayout);
         PanelComandosLayout.setHorizontalGroup(
             PanelComandosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, PanelComandosLayout.createSequentialGroup()
-                .addContainerGap(31, Short.MAX_VALUE)
-                .addComponent(TitulosComandoslbl)
-                .addGap(27, 27, 27))
+            .addComponent(Comandoslbl1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(PanelComandosLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(Comandoslbl, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
+                .addGroup(PanelComandosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, PanelComandosLayout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(TitulosComandoslbl)
+                        .addGap(27, 27, 27))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, PanelComandosLayout.createSequentialGroup()
+                        .addGroup(PanelComandosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(Comandoslbl5, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(Comandoslbl, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(Comandoslbl2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(Comandoslbl3, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 188, Short.MAX_VALUE)
+                            .addComponent(Comandoslbl4, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addContainerGap())
+                    .addComponent(Comandoslbl6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
         );
         PanelComandosLayout.setVerticalGroup(
             PanelComandosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -179,7 +226,19 @@ public class VentanaPrincipalPulgasLocas extends javax.swing.JFrame {
                 .addComponent(TitulosComandoslbl)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(Comandoslbl)
-                .addContainerGap(190, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(Comandoslbl2)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(Comandoslbl1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(Comandoslbl3)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(Comandoslbl4)
+                .addGap(1, 1, 1)
+                .addComponent(Comandoslbl6)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(Comandoslbl5, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(12, Short.MAX_VALUE))
         );
 
         PanelPuntajes.setBackground(new java.awt.Color(0, 153, 51));
@@ -189,6 +248,9 @@ public class VentanaPrincipalPulgasLocas extends javax.swing.JFrame {
         TituloPuntajeslbl.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
         TituloPuntajeslbl.setForeground(new java.awt.Color(255, 255, 255));
         TituloPuntajeslbl.setText("PUNTAJES");
+
+        Puntajeslbl.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        Puntajeslbl.setForeground(new java.awt.Color(255, 255, 255));
 
         javax.swing.GroupLayout PanelPuntajesLayout = new javax.swing.GroupLayout(PanelPuntajes);
         PanelPuntajes.setLayout(PanelPuntajesLayout);
@@ -265,14 +327,13 @@ public class VentanaPrincipalPulgasLocas extends javax.swing.JFrame {
             break;
 
 
-            case KeyEvent.VK_B:
-            {
+            case KeyEvent.VK_S: 
                 try {
                     campo.handleKey(evt);
                 } catch (IOException ex) {
+                    ex.printStackTrace();
                 }
-            }
-            break;
+                break;
                 
             case KeyEvent.VK_Q:
             {
@@ -281,6 +342,14 @@ public class VentanaPrincipalPulgasLocas extends javax.swing.JFrame {
                     this.exitGame();
                 } catch (IOException ex) {
                 }
+            }
+            break;
+            case KeyEvent.VK_SPACE:
+            try {
+                campo.handleKey(evt);
+                repaint(); 
+            } catch (IOException ex) {
+                ex.printStackTrace();
             }
             break;
         }
@@ -293,6 +362,12 @@ public class VentanaPrincipalPulgasLocas extends javax.swing.JFrame {
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel Comandoslbl;
+    private javax.swing.JLabel Comandoslbl1;
+    private javax.swing.JLabel Comandoslbl2;
+    private javax.swing.JLabel Comandoslbl3;
+    private javax.swing.JLabel Comandoslbl4;
+    private javax.swing.JLabel Comandoslbl5;
+    private javax.swing.JLabel Comandoslbl6;
     private javax.swing.JPanel PanelComandos;
     private javax.swing.JPanel PanelPuntajes;
     private javax.swing.JLabel Puntajeslbl;
