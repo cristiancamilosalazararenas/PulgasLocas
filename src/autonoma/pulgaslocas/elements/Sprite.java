@@ -27,10 +27,11 @@ public abstract class Sprite {
         this.color = color;
     }
     
-    /**
-     * Dibuja el sprite
-     */
-    public abstract void draw(Graphics g);
+    
+    public void draw(Graphics g) {
+        g.setColor(color);
+        g.fillRect(x, y, width, height);
+    }
     
     /**
      * Detecta colisión con otro sprite

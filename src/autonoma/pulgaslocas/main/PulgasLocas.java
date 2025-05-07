@@ -2,43 +2,37 @@ package autonoma.pulgaslocas.main;
 
 import autonoma.pulgaslocas.elements.CampoDeBatalla;
 import autonoma.pulgaslocas.elements.Soldado;
+import autonoma.pulgaslocas.gui.VentanaPrincipalPulgasLocas;
 import java.awt.Color;
 import java.io.IOException;
-import java.util.ArrayList;
 
 public class PulgasLocas {
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
         try {
             String ruta = "puntajes.txt";
-            
-            // Crear soldado con valores por defecto (no se usará en esta prueba)
-            Soldado soldado = new Soldado(0, 0, 30, 30, Color.BLUE, null);
-            
-            // Crear campo de batalla con constructor actualizado
-            CampoDeBatalla campo = new CampoDeBatalla(ruta, soldado);
-            
-            // Prueba del sistema de puntajes
-            campo.guardarPuntaje(250);
-            campo.guardarPuntaje(320);
-            campo.guardarPuntaje(150);
-            campo.guardarPuntaje(480);
-            campo.guardarPuntaje(300);
-            campo.guardarPuntaje(420);
-            campo.guardarPuntaje(500);
-            campo.guardarPuntaje(375);
-            campo.guardarPuntaje(460);
-            campo.guardarPuntaje(280);
-            campo.guardarPuntaje(290);
 
-            ArrayList<Integer> puntajes = campo.leerPuntajes();
-            System.out.println("PUNTAJES GUARDADOS:");
-            for (int p : puntajes) {
-                System.out.println(p);
-            }
+            // 1. Crear campo de batalla
+            CampoDeBatalla campo = new CampoDeBatalla(ruta);
+
+            // 2. Crear soldado y asociarlo con el campo
+            Soldado soldado = new Soldado(0, 0, 30, 30, Color.BLUE, campo);
+            campo.setSoldado(soldado);
+            campo.setBounds(700, 500); // Establecer límites del campo
+
+            // 3. Crear y mostrar la ventana principal
+            java.awt.EventQueue.invokeLater(() -> {
+                try {
+                    VentanaPrincipalPulgasLocas ventana = new VentanaPrincipalPulgasLocas(campo, soldado);
+                    ventana.setLocationRelativeTo(null);
+                    ventana.setVisible(true);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            });
 
         } catch (IOException e) {
-            System.out.println("Error al manejar el archivo de puntajes: " + e.getMessage());
+            e.printStackTrace();
         }
     }
 }

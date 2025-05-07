@@ -5,6 +5,7 @@
 package autonoma.pulgaslocas.elements;
 
 import java.awt.Color;
+import java.awt.Graphics;
 
 /**
  * Representa una pulga normal en el juego.
@@ -24,6 +25,12 @@ public class PulgaNormal extends Pulga {
         super(x, y, width, height, color, maxX, maxY);
         this.velocidadX = (Math.random() > 0.5) ? 2 : -2;
         this.velocidadY = (Math.random() > 0.5) ? 2 : -2;
+    }
+    
+    @Override
+    public void draw(Graphics g) {
+        g.setColor(Color.RED);
+        g.fillOval(x, y, width, height);
     }
 
     @Override

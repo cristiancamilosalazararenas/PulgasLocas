@@ -5,6 +5,7 @@
 package autonoma.pulgaslocas.elements;
 
 import java.awt.Color;
+import java.awt.Graphics;
 
 public class PulgaMutante extends Pulga {
 
@@ -12,6 +13,12 @@ public class PulgaMutante extends Pulga {
         super(x, y, width, height, color, maxX, maxY);
         this.velocidadX = (Math.random() > 0.5) ? 4 : -4;
         this.velocidadY = (Math.random() > 0.5) ? 4 : -4;
+    }
+    
+    @Override
+    public void draw(Graphics g) {
+        g.setColor(Color.GREEN);
+        g.fillOval(x, y, width, height);
     }
 
     @Override
